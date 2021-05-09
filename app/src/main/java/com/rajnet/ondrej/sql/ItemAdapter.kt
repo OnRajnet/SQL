@@ -24,7 +24,9 @@ class ItemAdapter(val context: Context, val items: ArrayList<EmpModelClass>) :
                 false
             )
         )
+
     }
+
 
     /**
      * Binds each item in the ArrayList to a view
