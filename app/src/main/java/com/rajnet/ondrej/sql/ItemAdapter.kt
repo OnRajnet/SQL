@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.rajnet.ondrej.sql.MainActivity
 import com.rajnet.ondrej.sql.R
 import kotlinx.android.synthetic.main.item_row.view.*
 
@@ -17,6 +18,7 @@ class ItemAdapter(val context: Context, val items: ArrayList<EmpModelClass>) :
      * {@link ViewHolder} and initializes some private fields to be used by RecyclerView.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         return ViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.item_row,
@@ -24,6 +26,7 @@ class ItemAdapter(val context: Context, val items: ArrayList<EmpModelClass>) :
                 false
             )
         )
+
 
     }
 
@@ -55,6 +58,13 @@ class ItemAdapter(val context: Context, val items: ArrayList<EmpModelClass>) :
             )
         } else {
             holder.llMain.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        }
+
+        holder.ivEdit.setOnClickListener { view ->
+
+            if (context is MainActivity) {
+                context.updateRecordDialog(item)
+            }
         }
     }
 
