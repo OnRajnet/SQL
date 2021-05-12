@@ -3,6 +3,7 @@ package com.rajnet.ondrej.sql
 import DatabaseHandler
 import EmpModelClass
 import ItemAdapter
+import android.app.AlertDialog
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -129,5 +130,46 @@ class MainActivity : AppCompatActivity() {
         })
         //Start the dialog and display it on screen.
         updateDialog.show()
+    }
+
+    /**
+     * Method is used to show the delete alert dialog.
+     */
+    fun deleteRecordAlertDialog(empModelClass: EmpModelClass) {
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle("Delete Record")
+        //set message for alert dialog
+        builder.setMessage("Are you sure you wants to delete ${empModelClass.name}.")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        //performing positive action
+        builder.setPositiveButton("Yes") { dialogInterface, which ->
+
+            //creating the instance of DatabaseHandler class
+            val databaseHandler: DatabaseHandler = DatabaseHandler(this)
+            //calling the deleteEmployee method of DatabaseHandler class to delete record
+            val status = databaseHandler.deleteEmployee(EmpModelClass(empModelClass.id, "", ""))
+            if (status > -1) {
+                Toast.makeText(
+                    applicationContext,
+                    "Record deleted successfully.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                setupListofDataIntoRecyclerView()
+            }
+
+            dialogInterface.dismiss() // Dialog will be dismissed
+        }
+        //performing negative action
+        builder.setNegativeButton("No") { dialogInterface, which ->
+            dialogInterface.dismiss() // Dialog will be dismissed
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false) // Will not allow user to cancel after clicking on remaining screen area.
+        alertDialog.show()  // show the dialog to UI
     }
 }

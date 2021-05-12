@@ -66,6 +66,13 @@ class ItemAdapter(val context: Context, val items: ArrayList<EmpModelClass>) :
                 context.updateRecordDialog(item)
             }
         }
+
+        holder.ivDelete.setOnClickListener { view ->
+
+            if (context is MainActivity) {
+                context.deleteRecordAlertDialog(item)
+            }
+        }
     }
 
     /**

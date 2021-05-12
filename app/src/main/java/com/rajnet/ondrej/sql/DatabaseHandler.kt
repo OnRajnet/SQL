@@ -103,4 +103,20 @@ class DatabaseHandler(context: Context) :
         db.close()
         return success
     }
+
+    /**
+     * Function to delete record
+     */
+    fun deleteEmployee(emp: EmpModelClass): Int {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ID, emp.id) // EmpModelClass id
+        // Deleting Row
+        val success = db.delete(TABLE_CONTACTS, KEY_ID + "=" + emp.id, null)
+        //2nd argument is String containing nullColumnHack
+
+        // Closing database connection
+        db.close()
+        return success
+    }
 }
